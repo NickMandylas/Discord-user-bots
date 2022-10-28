@@ -109,7 +109,27 @@ declare module "discord-user-bots" {
   }
 
   export class Client {
+    readonly user_settings: any;
     readonly user: User;
+    readonly tutorial: any;
+    readonly session_id: string;
+    readonly notes: any;
+    readonly guild_join_requests: any;
+    readonly user_guild_settings: any;
+    readonly relationships: any;
+    readonly read_state: any;
+    readonly private_channels: any;
+    readonly presences: any;
+    readonly guilds: any;
+    readonly guild_experiments: any;
+    readonly geo_ordered_rtc_regions: any;
+    readonly friend_suggestion_count: any;
+    readonly experiments: any;
+    readonly country_code: any;
+    readonly consents: any;
+    readonly connected_accounts: any;
+    readonly analytics_token: string;
+    readonly _trace: any;
 
     constructor(token: string, clientOptions?: ClientOptions);
 
