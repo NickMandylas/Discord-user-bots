@@ -1,15 +1,17 @@
 declare module "discord-user-bots" {
-  export type Message = {
-    content: string;
-    guild_id: string;
-    author: {
-      username: string;
-    };
-  };
+  export type UserStatus = "online" | "idle" | "dnd" | "invisible";
+
+  export interface UserCustomStatus {
+    text?: string;
+    emoji?: string;
+    expireAt?: string;
+  }
 
   export type User = {
     username: string;
   };
+
+  export type Message = any;
 
   export interface ClientEvents {
     discord_disconnect: () => void;
@@ -60,12 +62,97 @@ declare module "discord-user-bots" {
     message_reaction_remove_all: (message: Message) => void;
     message_reaction_remove_emoji: (message: Message) => void;
     typing_start: (message: Message) => void;
+
+    // Custom Events
+    embed_sent: (message: Message) => void;
+    message_edit: (message: Message) => void;
+  }
+
+  export interface ClientOptions {
+    api?: string;
+    wsurl?: string;
+    os?: string;
+    bd?: string;
+    language?: string;
+    typinginterval?: string;
+  }
+
+  export type MessageAttachmentOptions = {
+    path: string;
+    name: string;
+    description: string;
+  };
+
+  export interface MessageOptions {
+    content: string;
+    reply?: string;
+    tts?: boolean;
+    embeds: [];
+    allowed_mentions?: {
+      allowUsers: boolean;
+      allowRoles: boolean;
+      allowEveryone: boolean;
+      allowRepliedUsers: boolean;
+    };
+    components: [];
+    stickers: [];
+    attachments?: [string | MessageAttachmentOptions];
+  }
+
+  export interface InviteOptions {
+    validate?: boolean;
+    max_age: number;
+    max_users: number;
+    targer_user_id: string;
+    target_type: string;
+    temporary: boolean;
   }
 
   export class Client {
-    constructor(apiKey: string);
-    on: ClientEvents;
-
     readonly user: User;
+
+    constructor(token: string, clientOptions?: ClientOptions);
+
+    fetch_messages: (amount: number, channelId: string, offset: string) => any;
+    get_guild: (guildId: string) => any;
+    join_guild: (guildId: string) => any;
+    get_invite_info: (link: string) => any;
+    leave_guild: (guildId: string) => any;
+    delete_guild: (guildId: string) => any;
+    send: (channelId: string, message: MessageOptions) => any;
+    edit: (messageId: string, channelId: string, message: string) => any;
+    delete_message: (messageId: string, channelId: string) => any;
+    type: (channelId: string) => any;
+    stop_typing: () => any;
+    group: (userIds: string[]) => any;
+    leave_group: (groupId: string) => any;
+    remove_person_from_group: (userId: string, groupId: string) => any;
+    rename_group: (name: string, groupId: string) => any;
+    create_server: (name: string, templateId?: string) => any;
+    create_thread_from_message: (
+      messageId: string,
+      channelId: string,
+      name: string,
+      archivalTime?: number
+    ) => any;
+    create_thread: (
+      channelId: string,
+      name: string,
+      archivalTime?: number
+    ) => any;
+    delete_thread: (threadId: string) => any;
+    add_reaction: (messageId: string, channelId: string, emoji: string) => any;
+    remove_reaction: (
+      messageId: string,
+      channelId: string,
+      emoji: string
+    ) => any;
+    change_status: (status: UserStatus) => any;
+    set_custom_status: (status: UserCustomStatus) => any;
+    create_invite: (channelId: string, inviteOptions: InviteOptions) => any;
+    parse_invite_link: (link: string) => any;
+    set_config: (clientOptions: ClientOptions) => any;
+
+    on: ClientEvents;
   }
 }
