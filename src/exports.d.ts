@@ -108,9 +108,58 @@ declare module "discord-user-bots" {
     temporary: boolean;
   }
 
+  export interface UserSettingsResponse {
+    timezone_offset: number;
+    theme: string;
+    stream_notifications: boolean;
+    status: string;
+    show_current_game: boolean;
+    restricted_guilds: [];
+    render_reactions: boolean;
+    render_embeds: boolean;
+    native_phone_integration_enabled: boolean;
+    message_display_compact: boolean;
+    locale: string;
+    inline_embed_media: boolean;
+    inline_attachment_media: boolean;
+    guild_positions: [];
+    guild_folders: [];
+    gif_auto_play: boolean;
+    friend_source_flags: any;
+    explicit_content_filter: number;
+    enable_tts_command: boolean;
+    disable_games_tab: boolean;
+    developer_mode: boolean;
+    detect_platform_accounts: boolean;
+    default_guilds_restricted: boolean;
+    custom_status: any;
+    convert_emoticons: boolean;
+    contact_sync_enabled: boolean;
+    animate_stickers: number;
+    animate_emoji: boolean;
+    allow_accessibility_detection: boolean;
+    afk_timeout: number;
+  }
+
+  export interface UserResponse {
+    verified: boolean;
+    username: string;
+    premium: boolean;
+    phone: string;
+    nsfw_allowed: boolean;
+    mobile: boolean;
+    mfa_enabled: boolean;
+    id: string;
+    flags: number;
+    email: string;
+    discriminator: string;
+    desktop: boolean;
+    avatar: string;
+  }
+
   export class Client {
-    readonly user_settings: any;
-    readonly user: User;
+    readonly user_settings: UserSettingsResponse;
+    readonly user: UserResponse;
     readonly tutorial: any;
     readonly session_id: string;
     readonly notes: any;
